@@ -8,6 +8,7 @@ const { firebaseApp } = require('../firebaseConfig');
 const ref = firebaseApp.database().ref('products');
 
 router.get('/', (req, res, next) => {
+    console.log("product get");
     res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
     ref.once("value", snap => {
         if (snap.val()==null) {
@@ -24,6 +25,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', validate(validation), (req, res, next) => {
+    console.log("product post");
     var data = req.body;
     var pushRef = ref.push(data, err => {
         if (err) {
@@ -35,6 +37,7 @@ router.post('/', validate(validation), (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
+    console.log("product put");
     var data = req.body;
     ref.child(req.params.id).update(data, err => {
         if (err) {
